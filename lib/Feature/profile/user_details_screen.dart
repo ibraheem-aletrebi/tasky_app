@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/Feature/layaout/controller/app_controller.dart';
 
@@ -51,7 +52,7 @@ class UserDetailsScreen extends StatelessWidget {
                   CustomElevatedButton(
                     onPressed: () {
                       appController.updateUserData();
-                      Navigator.pop(context, true);
+                      context.pop(true);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

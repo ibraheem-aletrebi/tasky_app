@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tasky/Feature/layaout/layout_screen.dart';
+import 'package:tasky/core/routing/app_routes.dart';
 import 'package:tasky/core/services/preference_manegar/preference_manegar.dart';
 import 'package:tasky/core/services/preference_manegar/storage_key.dart';
 import 'package:tasky/core/styles/app_assets.dart';
@@ -84,10 +86,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       'One task at a time.One step closer.',
                     );
                     showSuccessSnackBar(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LayoutScreen()),
-                    );
+                    context.pushNamed(AppRoutes.kMainScreen);
                   } else {
                     showFailedSnackBar(context);
                   }

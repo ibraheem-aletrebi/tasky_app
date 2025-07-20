@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/Feature/home/components/high_priority_task_item_widget.dart';
 import 'package:tasky/Feature/tasks/controller/tasks_controller.dart';
 import 'package:tasky/Feature/tasks/high_priority_tasks_screen.dart';
+import 'package:tasky/core/routing/app_routes.dart';
 import 'package:tasky/core/styles/app_colors.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 
@@ -53,12 +55,7 @@ class HighPriorityTasksWidget extends StatelessWidget {
               ),
               IconButton.filled(
                 onPressed: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HighPriorityTasksScreen(),
-                    ),
-                  );
+                  await context.pushNamed(AppRoutes.kHighPriorityTasksScreen);
                   tasksController.init();
                 },
                 style: IconButton.styleFrom(

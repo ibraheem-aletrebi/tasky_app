@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/Feature/model/task_model.dart';
 import 'package:tasky/Feature/tasks/controller/tasks_controller.dart';
@@ -109,7 +110,7 @@ class PopupMenuWidget extends StatelessWidget {
                     child: Text('Save Changes'),
                     onPressed: () {
                       controller.updateTask(model.id);
-                      Navigator.pop(context);
+                      context.pop();
                     },
                   ),
                 ],
@@ -150,7 +151,7 @@ class PopupMenuWidget extends StatelessWidget {
                   actions: [
                     TextButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        context.pop();
                       },
                       child: Text(
                         'Cancle',
@@ -160,7 +161,7 @@ class PopupMenuWidget extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         context.read<TasksController>().deleteTask(model.id);
-                        Navigator.pop(context);
+                        context.pop();
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.redAccent,

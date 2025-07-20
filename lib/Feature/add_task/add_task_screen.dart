@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/Feature/add_task/components/form_add_task_widget.dart';
 import 'package:tasky/Feature/add_task/controller/add_task_controller.dart';
@@ -27,8 +28,7 @@ class AddTaskScreen extends StatelessWidget {
                     onPressed: () {
                       if (addTaskController.formKey.currentState!.validate()) {
                         context.read<AddTaskController>().addTask();
-
-                        Navigator.pop(context, true);
+                        context.pop(true);
                       }
                     },
                     child: Row(

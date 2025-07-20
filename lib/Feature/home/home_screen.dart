@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/Feature/add_task/add_task_screen.dart';
 import 'package:tasky/Feature/home/components/achieved_tasks_widget.dart';
@@ -7,6 +8,7 @@ import 'package:tasky/Feature/home/components/home_appbar_widget.dart';
 import 'package:tasky/Feature/home/components/motivation_text_widget.dart';
 import 'package:tasky/Feature/home/components/sliver_list_item_widget.dart';
 import 'package:tasky/Feature/tasks/controller/tasks_controller.dart';
+import 'package:tasky/core/routing/app_routes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -51,9 +53,8 @@ class HomeScreen extends StatelessWidget {
             height: 40,
             child: FloatingActionButton.extended(
               onPressed: () async {
-                final bool? isBack = await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddTaskScreen()),
+                final bool? isBack = await context.pushNamed(
+                  AppRoutes.kAddTaskScreen,
                 );
                 if (isBack != null && isBack && context.mounted) {
                   context.read<TasksController>().init();

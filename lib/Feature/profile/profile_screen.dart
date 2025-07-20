@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/Feature/home/components/circler_user_image_widget.dart';
 import 'package:tasky/Feature/layaout/controller/app_controller.dart';
 import 'package:tasky/Feature/profile/user_details_screen.dart';
 import 'package:tasky/Feature/welcome/welcome_screen.dart';
+import 'package:tasky/core/routing/app_routes.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custom_screen_title.dart';
 import 'package:tasky/core/widgets/custom_svg_picture.dart';
@@ -40,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
                           SimpleDialogOption(
                             onPressed: () {
                               appController.pickImageFromCamera();
-                              Navigator.pop(context);
+                              context.pop();
                             },
                             child: Row(
                               spacing: 8,
@@ -56,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
                           SimpleDialogOption(
                             onPressed: () {
                               appController.pickImageFromGallery();
-                              Navigator.pop(context);
+                              context.pop();
                             },
                             child: Row(
                               spacing: 8,
@@ -116,9 +118,8 @@ class ProfileScreen extends StatelessWidget {
 
           GestureDetector(
             onTap: () async {
-              final bool? isBack = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => UserDetailsScreen()),
+              final bool? isBack = await context.pushNamed(
+                AppRoutes.kUserDetailsScreen,
               );
               if (isBack != null && isBack && context.mounted) {
                 context.read<AppController>().init();
@@ -148,11 +149,7 @@ class ProfileScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {
               appController.logout();
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => WelcomeScreen()),
-                (Route<dynamic> route) => false,
-              );
+              context.pushReplacementNamed(AppRoutes.kWelcomScreen);
             },
             child: ListTile(
               leading: CustomSvgPicture(path: 'assets/icons/logout_icon.svg'),
