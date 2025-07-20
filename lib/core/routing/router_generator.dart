@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasky/Feature/add_task/add_task_screen.dart';
-import 'package:tasky/Feature/layaout/layout_screen.dart';
-import 'package:tasky/Feature/profile/user_details_screen.dart';
-import 'package:tasky/Feature/tasks/high_priority_tasks_screen.dart';
-import 'package:tasky/Feature/welcome/welcome_screen.dart';
+import 'package:tasky/Feature/layaout/screen/layout_screen.dart';
+import 'package:tasky/Feature/profile/screen/user_details_screen.dart';
+import 'package:tasky/Feature/tasks/screen/high_priority_tasks_screen.dart';
+import 'package:tasky/Feature/welcome/screen/welcome_screen.dart';
 import 'package:tasky/core/routing/app_routes.dart';
 import 'package:tasky/core/services/preference_manegar/preference_manegar.dart';
 import 'package:tasky/core/services/preference_manegar/storage_key.dart';

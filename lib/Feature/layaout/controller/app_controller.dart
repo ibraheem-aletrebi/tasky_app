@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tasky/Feature/tasks/completed_tasks_screen.dart';
-import 'package:tasky/Feature/home/home_screen.dart';
-import 'package:tasky/Feature/profile/profile_screen.dart';
-import 'package:tasky/Feature/tasks/todo_tasks_screen.dart';
+import 'package:tasky/Feature/tasks/screen/completed_tasks_screen.dart';
+import 'package:tasky/Feature/home/screen/home_screen.dart';
+import 'package:tasky/Feature/profile/screen/profile_screen.dart';
+import 'package:tasky/Feature/tasks/screen/todo_tasks_screen.dart';
 import 'package:tasky/core/services/preference_manegar/preference_manegar.dart';
 import 'package:tasky/core/services/preference_manegar/storage_key.dart';
 

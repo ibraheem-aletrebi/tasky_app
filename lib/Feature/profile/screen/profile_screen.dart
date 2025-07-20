@@ -3,8 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/Feature/home/components/circler_user_image_widget.dart';
 import 'package:tasky/Feature/layaout/controller/app_controller.dart';
-import 'package:tasky/Feature/profile/user_details_screen.dart';
-import 'package:tasky/Feature/welcome/welcome_screen.dart';
 import 'package:tasky/core/routing/app_routes.dart';
 import 'package:tasky/core/theme/theme_controller.dart';
 import 'package:tasky/core/widgets/custom_screen_title.dart';
