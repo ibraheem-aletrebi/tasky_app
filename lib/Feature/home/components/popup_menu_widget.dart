@@ -19,9 +19,6 @@ class PopupMenuWidget extends StatelessWidget {
     TaskModel model,
   ) async {
     final controller = context.read<TasksController>();
-    controller.taskNameController.text = model.taskName;
-    controller.taskDescriptionController.text = model.taskDescription ?? '';
-    controller.isHighPrioriyt = model.isHighPriority;
     await showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -42,78 +39,83 @@ class PopupMenuWidget extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    width: 80,
-                    height: 10,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      child: Column(
-                        children: [
-                          CustomTextFormField(
-                            title: 'Task Name',
-                            hintTxt: 'Finish UI design for login screen',
-                            controller: controller.taskNameController,
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return "This field is required..!";
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 28),
-                          CustomTextFormField(
-                            title: 'Task Description',
-                            hintTxt:
-                                'Finish onboarding UI and hand off to devs by Thursday.',
-                            controller: controller.taskDescriptionController,
-                            maxLines: 6,
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'High Priority',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Selector<TasksController, bool>(
-                                selector: (context, controller) =>
-                                    controller.isHighPrioriyt,
-                                builder: (context, value, child) {
-                                  return Switch(
-                                    value: value,
-                                    onChanged: (newValue) {
-                                      context
-                                          .read<TasksController>()
-                                          .togglePriority(newValue);
-                                    },
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
+              child: Form(
+                key: controller.formKey,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      width: 80,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                  ),
-                  CustomElevatedButton(
-                    child: Text('Save Changes'),
-                    onPressed: () {
-                      controller.updateTask(model.id);
-                      context.pop();
-                    },
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        child: Column(
+                          children: [
+                            CustomTextFormField(
+                              title: 'Task Name',
+                              hintTxt: 'Finish UI design for login screen',
+                              controller: controller.taskNameController,
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "This field is required..!";
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 28),
+                            CustomTextFormField(
+                              title: 'Task Description',
+                              hintTxt:
+                                  'Finish onboarding UI and hand off to devs by Thursday.',
+                              controller: controller.taskDescriptionController,
+                              maxLines: 6,
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'High Priority',
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.titleMedium,
+                                ),
+                                Selector<TasksController, bool>(
+                                  selector: (context, controller) =>
+                                      controller.isHighPrioriyt,
+                                  builder: (context, value, child) {
+                                    return Switch(
+                                      value: value,
+                                      onChanged: (newValue) {
+                                        context
+                                            .read<TasksController>()
+                                            .togglePriority(newValue);
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    CustomElevatedButton(
+                      child: Text('Save Changes'),
+                      onPressed: () {
+                        controller.updateTask(model.id);
+                        context.pop();
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -132,6 +134,7 @@ class PopupMenuWidget extends StatelessWidget {
             controller.toggleDoneTask(model.id);
             break;
           case TaskItemActionsEnum.edit:
+            controller.initUpdatedTask(model);
             _showModelBottomSheet(context, model);
             controller.init();
             break;

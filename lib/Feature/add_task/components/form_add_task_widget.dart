@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tasky/Feature/add_task/controller/add_task_controller.dart';
+import 'package:tasky/Feature/tasks/controller/tasks_controller.dart';
 import 'package:tasky/core/widgets/custom_text_form_field.dart';
 
 class FormAddTaskWidget extends StatelessWidget {
   const FormAddTaskWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    AddTaskController addTaskController = context.read<AddTaskController>();
+    TasksController tasksController = context.read<TasksController>();
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
@@ -15,7 +15,7 @@ class FormAddTaskWidget extends StatelessWidget {
             CustomTextFormField(
               title: 'Task Name',
               hintTxt: 'Finish UI design for login screen',
-              controller: addTaskController.taskNameController,
+              controller: tasksController.taskNameController,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return "This field is required..!";
@@ -27,7 +27,7 @@ class FormAddTaskWidget extends StatelessWidget {
             CustomTextFormField(
               title: 'Task Description',
               hintTxt: 'Finish onboarding UI and hand off to devs by Thursday.',
-              controller: addTaskController.taskDescriptionController,
+              controller: tasksController.taskDescriptionController,
               maxLines: 6,
             ),
             SizedBox(height: 16),
@@ -35,11 +35,11 @@ class FormAddTaskWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('High Priority', style: TextTheme.of(context).titleMedium),
-                Consumer<AddTaskController>(
+                Consumer<TasksController>(
                   builder: (context, controller, child) => Switch(
                     value: controller.isHighPrioriyt,
                     onChanged: (value) {
-                      addTaskController.togglePriority(value);
+                      tasksController.togglePriority(value);
                     },
                   ),
                 ),

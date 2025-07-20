@@ -10,26 +10,57 @@ class TasksController with ChangeNotifier {
   List<TaskModel> completedTasks = [];
   List<TaskModel> highPriorityTasks = [];
   double percent = 0;
-
   TextEditingController taskNameController = TextEditingController();
   TextEditingController taskDescriptionController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isHighPrioriyt = true;
+  late TaskModel taskWillUpdate;
+
+  initUpdatedTask(TaskModel model) {
+    taskWillUpdate = model;
+    taskNameController.text = model.taskName;
+    taskDescriptionController.text = model.taskDescription ?? '';
+    notifyListeners();
+  }
 
   togglePriority(bool value) {
     isHighPrioriyt = value;
     notifyListeners();
   }
 
+  addTask() async {
+    String? tasksJson = PreferenceManegar().getString(StorageKey.tasks);
+    List<dynamic> tasksList = [];
+    if (tasksJson != null) {
+      tasksList = jsonDecode(tasksJson);
+    }
+    TaskModel task = TaskModel(
+      id: tasksList.length + 1,
+      taskName: taskNameController.text,
+      taskDescription: taskDescriptionController.text,
+      isHighPriority: isHighPrioriyt,
+    );
+    taskNameController.clear();
+    taskDescriptionController.clear();
+    tasksList.add(task.toJson());
+    String taskAfterEncode = jsonEncode(tasksList);
+    await PreferenceManegar().setString(StorageKey.tasks, taskAfterEncode);
+    notifyListeners();
+  }
+
   updateTask(int id) {
     final taskIndex = tasks.indexWhere((e) => e.id == id);
+    taskWillUpdate = tasks[taskIndex];
+
     tasks[taskIndex] = TaskModel(
       id: id,
       taskName: taskNameController.text,
       taskDescription: taskDescriptionController.text,
-      isHighPriority: isHighPrioriyt,
+      isHighPriority: taskWillUpdate.isHighPriority,
       isDone: tasks[taskIndex].isDone,
     );
+    taskNameController.clear();
+    taskDescriptionController.clear();
     _restoreTasks();
     init();
     notifyListeners();
